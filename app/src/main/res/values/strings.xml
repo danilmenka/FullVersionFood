@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">FullVersionFood</string>
+    <string name="RecipesOfRefrigerator">Рецепты из имеющихся игредиентов</string>
+    <string name="ReadyRecipes">Готовые рецепты</string>
+    <string name="addIngredient">Добавить ингредиент</string>
+    <string name="Ingredients">Ингредиенты</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
