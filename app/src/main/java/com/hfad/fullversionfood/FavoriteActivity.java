@@ -9,7 +9,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
-public class FavoriteActivity extends Activity{
+public class FavoriteActivity extends Activity implements FavoriteFragment.CallBack{
     FavoriteFragment  frag1;
     AddIngrFragment frag2;
     FragmentTransaction trans;
@@ -22,6 +22,14 @@ public class FavoriteActivity extends Activity{
         trans = getFragmentManager().beginTransaction();
         trans.add(R.id.frgmCont, frag1);
         trans.commit();
+        frag1.setCallBack(this);
       }
-      }
+
+    @Override
+    public void callingBack() {
+        trans = getFragmentManager().beginTransaction();
+        trans.replace(R.id.frgmCont, frag2);
+        trans.commit();
+    }
+}
 
