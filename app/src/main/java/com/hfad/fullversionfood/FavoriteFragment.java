@@ -33,12 +33,7 @@ public class FavoriteFragment extends Fragment {
         // Inflate the layout for this fragment
         final View rootView =
                 inflater.inflate(R.layout.fragment_favorite, container, false);
-
-
-
-
         Button button = (Button) rootView.findViewById(R.id.button3);
-
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
