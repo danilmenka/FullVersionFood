@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.app.ListFragment;
 import android.os.Bundle;
 import android.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,19 +26,17 @@ public class AddIngrFragment extends ListFragment {
         this.listener = ingredientListListener;
     }
 
-
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
         // Inflate the layout for this fragment
            String[] names = new String[Ingredient.parents.length];
-            for (int i=0; i<names.length; i++){
-                names[i] = Ingredient.parents[i];
-            }
-            ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(inflater.getContext(),android.R.layout.simple_list_item_1,names);
-            setListAdapter(arrayAdapter);
+        for (int i=0; i<names.length; i++){
+            names[i] = Ingredient.parents[i];
+        }
+        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(inflater.getContext(),android.R.layout.simple_list_item_1,names);
+        setListAdapter(arrayAdapter);
         return super.onCreateView(inflater,container,savedInstanceState);
     }
   /*  @Override

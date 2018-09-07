@@ -4,7 +4,7 @@
     <string name="ReadyRecipes">Готовые рецепты</string>
     <string name="addIngredient">Добавить ингредиент</string>
     <string name="Ingredients">Ингредиенты</string>
-
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="empty">Пустой список</string>
 </resources>

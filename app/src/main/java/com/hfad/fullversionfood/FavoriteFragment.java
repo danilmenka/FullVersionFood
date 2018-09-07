@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,7 +19,9 @@ import java.util.Date;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class FavoriteFragment extends Fragment {
+public class FavoriteFragment extends Fragment implements IngredientListFragment.InterfaceIngredients{
+    IngredientListFragment ingredientListFragment;
+    TextView ingredientText;
     interface CallBack{
         void callingBack();
     }
@@ -33,7 +36,10 @@ public class FavoriteFragment extends Fragment {
         // Inflate the layout for this fragment
         final View rootView =
                 inflater.inflate(R.layout.fragment_favorite, container, false);
+          ingredientListFragment = new IngredientListFragment();
+          ingredientListFragment.setInterfaceIngredients(this);
         Button button = (Button) rootView.findViewById(R.id.button3);
+        ingredientText = (TextView)rootView.findViewById(R.id.IngredientsInFavourite);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -41,7 +47,12 @@ public class FavoriteFragment extends Fragment {
             }
         });
 
-
         return rootView;
+    }
+    @Override
+    public void interfaceThree(String ingredients) {
+        Log.i("anal","message");
+        ingredientText.setText(ingredients);
+
     }
 }
