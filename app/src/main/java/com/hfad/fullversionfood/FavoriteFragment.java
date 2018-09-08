@@ -22,6 +22,14 @@ import java.util.Date;
 public class FavoriteFragment extends Fragment implements IngredientListFragment.InterfaceIngredients{
     IngredientListFragment ingredientListFragment;
     TextView ingredientText;
+    String ala;
+
+    @Override
+    public void interfaceThree(String ingredients) {
+        ala += ingredients;
+    }
+
+
     interface CallBack{
         void callingBack();
     }
@@ -36,8 +44,6 @@ public class FavoriteFragment extends Fragment implements IngredientListFragment
         // Inflate the layout for this fragment
         final View rootView =
                 inflater.inflate(R.layout.fragment_favorite, container, false);
-          ingredientListFragment = new IngredientListFragment();
-          ingredientListFragment.setInterfaceIngredients(this);
         Button button = (Button) rootView.findViewById(R.id.button3);
         ingredientText = (TextView)rootView.findViewById(R.id.IngredientsInFavourite);
         button.setOnClickListener(new View.OnClickListener() {
@@ -46,13 +52,8 @@ public class FavoriteFragment extends Fragment implements IngredientListFragment
                 callBack.callingBack();
             }
         });
-
+        ingredientText.setText(ala);
         return rootView;
     }
-    @Override
-    public void interfaceThree(String ingredients) {
-        Log.i("anal","message");
-        ingredientText.setText(ingredients);
 
-    }
 }

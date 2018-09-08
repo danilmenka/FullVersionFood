@@ -21,7 +21,9 @@ import android.widget.TextView;
  * A simple {@link Fragment} subclass.
  */
 public class IngredientListFragment extends ListFragment {
-
+    String prompt = "";
+    int [] idIngredient;
+    String[] names;
     interface InterfaceIngredients{
         void interfaceThree(String ingredients);
     }
@@ -33,7 +35,7 @@ public class IngredientListFragment extends ListFragment {
 
     public static long INGREDIENT_PARENT_ID;
     int test;
-    String[] names;
+
         @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -66,9 +68,12 @@ public class IngredientListFragment extends ListFragment {
         int k = 0;
 
         names = new String[inkrement];
+        idIngredient = new int[inkrement];
         for (int i=0; i<Ingredient.ingredients.length; i++){
             if(Ingredient.parents[test] == Ingredient.ingredients[i].getParent()){
-                names[k] = Ingredient.ingredients[i].getName();k++;}
+                names[k] = Ingredient.ingredients[i].getName();
+                idIngredient[k] = Ingredient.ingredients[i].getId();
+                k++;}
         }
 
         ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(getActivity(),android.R.layout.simple_list_item_multiple_choice,names);
@@ -79,10 +84,7 @@ public class IngredientListFragment extends ListFragment {
     public void onListItemClick(ListView l, View v, int position, long id) {
         super.onListItemClick(l, v, position, id);
 
-        String prompt = "Вы выбрали: "
-                + getListView().getItemAtPosition(position).toString() + "\n";
-
-        prompt += "Выбранные элементы: \n";
+        prompt = "";
         int count = getListView().getCount();
         SparseBooleanArray sparseBooleanArray = getListView()
                 .getCheckedItemPositions();
@@ -94,12 +96,13 @@ public class IngredientListFragment extends ListFragment {
         }
 
 
-        Toast.makeText(getActivity(), prompt, Toast.LENGTH_LONG).show();
+
+
     }
 
     @Override
     public void onStop() {
         super.onStop();
-        interfaceIngredients.interfaceThree("yes");
+        interfaceIngredients.interfaceThree(prompt);
     }
 }

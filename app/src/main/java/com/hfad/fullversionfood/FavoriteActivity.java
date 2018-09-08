@@ -6,15 +6,19 @@ import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-public class FavoriteActivity extends Activity implements FavoriteFragment.CallBack,AddIngrFragment.IngredientListListener {
+public class FavoriteActivity extends Activity implements FavoriteFragment.CallBack,AddIngrFragment.IngredientListListener
+       {
     FavoriteFragment  favoriteFragment;
     AddIngrFragment addIngrFragment;
     FragmentTransaction trans;
     IngredientListFragment ingredientListFragment;
+
+
 
 
     String [] choosedIngredients = new String[Ingredient.ingredients.length];
@@ -30,6 +34,8 @@ public class FavoriteActivity extends Activity implements FavoriteFragment.CallB
         trans.commit();
         favoriteFragment.setCallBack(this);
         addIngrFragment.setListener(this);
+        ingredientListFragment.setInterfaceIngredients(favoriteFragment);
+
       }
 
     @Override
@@ -52,7 +58,6 @@ public class FavoriteActivity extends Activity implements FavoriteFragment.CallB
         trans.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
         trans.commit();
     }
-
 
 }
 

@@ -21,6 +21,7 @@ public class AddIngrFragment extends ListFragment {
    interface IngredientListListener{
         void itemClicked(long id);
     }
+    String[] names;
     IngredientListListener listener;
     public void setListener (IngredientListListener ingredientListListener){
         this.listener = ingredientListListener;
@@ -31,7 +32,7 @@ public class AddIngrFragment extends ListFragment {
                              Bundle savedInstanceState) {
 
         // Inflate the layout for this fragment
-           String[] names = new String[Ingredient.parents.length];
+        names = new String[Ingredient.parents.length];
         for (int i=0; i<names.length; i++){
             names[i] = Ingredient.parents[i];
         }
