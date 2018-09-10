@@ -90,7 +90,9 @@ public class IngredientListFragment extends ListFragment {
                 .getCheckedItemPositions();
         for (int i = 0; i < count; i++) {
             if (sparseBooleanArray.get(i)) {
-                prompt += getListView().getItemAtPosition(i).toString() + "\n";
+                prompt += idIngredient[i] + "\n";
+
+              //  prompt += getListView().getItemAtPosition(i).toString() + "\n";
 
             }
         }

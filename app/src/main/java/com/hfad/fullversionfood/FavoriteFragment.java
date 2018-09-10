@@ -22,7 +22,7 @@ import java.util.Date;
 public class FavoriteFragment extends Fragment implements IngredientListFragment.InterfaceIngredients{
     IngredientListFragment ingredientListFragment;
     TextView ingredientText;
-    String ala;
+    String ala = "";
 
     @Override
     public void interfaceThree(String ingredients) {
