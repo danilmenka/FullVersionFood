@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import java.util.Arrays;
 import java.util.Date;
 
 
@@ -20,13 +21,30 @@ import java.util.Date;
  * A simple {@link Fragment} subclass.
  */
 public class FavoriteFragment extends Fragment implements IngredientListFragment.InterfaceIngredients{
-    IngredientListFragment ingredientListFragment;
     TextView ingredientText;
-    String ala = "";
+    public String str = "";
+    int [] ala= new int[Ingredient.ingredients.length];
 
     @Override
-    public void interfaceThree(String ingredients) {
-        ala += ingredients;
+    public void interfaceThree(int [] ingredients) {
+        boolean boosy = false;
+        for (int k = 0; k < ingredients.length; k++){
+            if (ingredients[k] !=0){
+                 for (int i = 0; i < ala.length; i++){
+                     if (ingredients[k] == ala[i]){
+                        boosy = true;
+                        break;
+                     }
+                 }
+                        if (boosy == false){
+                            for (int i = 0; i < ala.length; i++) {
+                                if (ala[i]==0){ ala[i] = ingredients[k]; break;
+                                }
+                             }
+                        }
+            }
+                 boosy = false;
+        }
     }
 
 
@@ -52,7 +70,14 @@ public class FavoriteFragment extends Fragment implements IngredientListFragment
                 callBack.callingBack();
             }
         });
-        ingredientText.setText(ala);
+            str = "";
+          for (int i = 0; i < ala.length; i++){
+              if(ala[i] != 0){
+                  str += (ala[i] + "\n");
+              }
+          }
+        ingredientText.setText(str);
+
         return rootView;
     }
 

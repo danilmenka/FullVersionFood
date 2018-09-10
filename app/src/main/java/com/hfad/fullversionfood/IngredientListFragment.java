@@ -16,16 +16,18 @@ import android.util.SparseBooleanArray;
 import android.widget.Toast;
 import android.widget.TextView;
 
+import java.util.Arrays;
+
 
 /**
  * A simple {@link Fragment} subclass.
  */
 public class IngredientListFragment extends ListFragment {
-    String prompt = "";
+    int [] prompt;
     int [] idIngredient;
     String[] names;
     interface InterfaceIngredients{
-        void interfaceThree(String ingredients);
+        void interfaceThree(int [] ingredients);
     }
 
     InterfaceIngredients interfaceIngredients;
@@ -69,6 +71,7 @@ public class IngredientListFragment extends ListFragment {
 
         names = new String[inkrement];
         idIngredient = new int[inkrement];
+        prompt = new int[inkrement];
         for (int i=0; i<Ingredient.ingredients.length; i++){
             if(Ingredient.parents[test] == Ingredient.ingredients[i].getParent()){
                 names[k] = Ingredient.ingredients[i].getName();
@@ -84,27 +87,31 @@ public class IngredientListFragment extends ListFragment {
     public void onListItemClick(ListView l, View v, int position, long id) {
         super.onListItemClick(l, v, position, id);
 
-        prompt = "";
-        int count = getListView().getCount();
-        SparseBooleanArray sparseBooleanArray = getListView()
-                .getCheckedItemPositions();
-        for (int i = 0; i < count; i++) {
-            if (sparseBooleanArray.get(i)) {
-                prompt += idIngredient[i] + "\n";
-
-              //  prompt += getListView().getItemAtPosition(i).toString() + "\n";
-
-            }
-        }
 
 
 
 
     }
-
+    String str12;
     @Override
     public void onStop() {
         super.onStop();
+        int k = 0;
+
+        int count = getListView().getCount();
+        SparseBooleanArray sparseBooleanArray = getListView()
+                .getCheckedItemPositions();
+        for (int i = 0; i < count; i++) {
+            if (sparseBooleanArray.get(i)) {
+                prompt[k]= idIngredient[i];
+
+                k++;
+                //  prompt += getListView().getItemAtPosition(i).toString() + "\n";
+            }
+        }
+
+
         interfaceIngredients.interfaceThree(prompt);
+
     }
 }
