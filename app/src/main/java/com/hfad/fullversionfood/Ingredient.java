@@ -24,7 +24,7 @@ public class Ingredient {
     }
 
     static final Ingredient ingredients []= {
-            new Ingredient("Вино белое",0,0),
+            new Ingredient("Вино белое",0,16),
             new Ingredient("Вино красное",0,1),
             new Ingredient("Водка",0,2),
             new Ingredient("Виски",0,3),
@@ -40,5 +40,6 @@ public class Ingredient {
             new Ingredient("Соевый соус",3,13),
             new Ingredient("Черный перец",4,14),
             new Ingredient("Красный перец",4,15),
+            new Ingredient("Базелик",4,17),
     };
 }

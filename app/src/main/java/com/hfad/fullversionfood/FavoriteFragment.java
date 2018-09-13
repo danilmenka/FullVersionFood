@@ -24,9 +24,12 @@ public class FavoriteFragment extends Fragment implements IngredientListFragment
     TextView ingredientText;
     public String str = "";
     int [] ala= new int[Ingredient.ingredients.length];
+    int [] removeFromSelectedFavorite;
 
     @Override
-    public void interfaceThree(int [] ingredients) {
+    public void interfaceThree(int [] ingredients, int [] removeFromSelected) {
+
+
         boolean boosy = false;
         for (int k = 0; k < ingredients.length; k++){
             if (ingredients[k] !=0){
@@ -45,11 +48,31 @@ public class FavoriteFragment extends Fragment implements IngredientListFragment
             }
                  boosy = false;
         }
+        /*removeFromSelectedFavorite = new int[removeFromSelected.length];
+        for (int i=0;i<removeFromSelectedFavorite.length;i++){
+            System.out.println("ANNA "+removeFromSelected[i]);
+        }*/
+        for (int i=0; i < ala.length; i++){
+            for (int k=0;k< removeFromSelected.length;k++){
+
+                if ((ala[i]==removeFromSelected[k])&(ala[i]!=0)){
+                    ala[i]=0; break;
+                }
+            }
+        }
+    }
+
+    interface SelectedItems{
+        void goSelectedItems(int [] items);
+    }
+    SelectedItems selectedItems;
+    public void setSelectedItems (SelectedItems selectedItems){
+        this.selectedItems = selectedItems;
     }
 
 
     interface CallBack{
-        void callingBack();
+        void callingBack(int [] selectedIngredients);
     }
     CallBack callBack;
     public void setCallBack(CallBack callBack){
@@ -67,7 +90,7 @@ public class FavoriteFragment extends Fragment implements IngredientListFragment
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                callBack.callingBack();
+                callBack.callingBack(ala);
             }
         });
             str = "";

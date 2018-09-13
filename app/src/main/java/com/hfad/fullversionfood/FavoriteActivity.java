@@ -17,11 +17,7 @@ public class FavoriteActivity extends Activity implements FavoriteFragment.CallB
     AddIngrFragment addIngrFragment;
     FragmentTransaction trans;
     IngredientListFragment ingredientListFragment;
-
-
-
-
-    String [] choosedIngredients = new String[Ingredient.ingredients.length];
+    int [] choosedIngredients= new int[Ingredient.ingredients.length];
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,11 +31,11 @@ public class FavoriteActivity extends Activity implements FavoriteFragment.CallB
         favoriteFragment.setCallBack(this);
         addIngrFragment.setListener(this);
         ingredientListFragment.setInterfaceIngredients(favoriteFragment);
-
       }
 
     @Override
-    public void callingBack() {
+    public void callingBack(int [] selectedItems1) {
+        choosedIngredients = selectedItems1;
         trans = getFragmentManager().beginTransaction();
         trans.replace(R.id.frgmCont, addIngrFragment);
         trans.addToBackStack(null);
@@ -50,7 +46,7 @@ public class FavoriteActivity extends Activity implements FavoriteFragment.CallB
 
     @Override
     public void itemClicked(long id) {
-
+        IngredientListFragment.SELECTED_INGREDIENTS = choosedIngredients;
         IngredientListFragment.INGREDIENT_PARENT_ID = id;
         trans = getFragmentManager().beginTransaction();
         trans.replace(R.id.frgmCont, ingredientListFragment);
