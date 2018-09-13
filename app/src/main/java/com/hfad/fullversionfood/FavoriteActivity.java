@@ -1,23 +1,17 @@
 package com.hfad.fullversionfood;
 
-
 import android.app.Activity;
-import android.app.Fragment;
-import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.View;
-import android.widget.Button;
-import android.widget.TextView;
 
-public class FavoriteActivity extends Activity implements FavoriteFragment.CallBack,AddIngrFragment.IngredientListListener
-       {
+public class FavoriteActivity extends Activity implements FavoriteFragment.CallBack,AddIngrFragment.IngredientListListener {
+    //Переменные:
     FavoriteFragment  favoriteFragment;
     AddIngrFragment addIngrFragment;
     FragmentTransaction trans;
     IngredientListFragment ingredientListFragment;
-    int [] choosedIngredients= new int[Ingredient.ingredients.length];
+    int [] choosedIngredients= new int[Ingredient.ingredients.length]; //Массив выбранных элементов
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,6 +28,7 @@ public class FavoriteActivity extends Activity implements FavoriteFragment.CallB
       }
 
     @Override
+    //Интерфейс для запуска AddIngrFragment
     public void callingBack(int [] selectedItems1) {
         choosedIngredients = selectedItems1;
         trans = getFragmentManager().beginTransaction();
@@ -41,9 +36,9 @@ public class FavoriteActivity extends Activity implements FavoriteFragment.CallB
         trans.addToBackStack(null);
         trans.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
         trans.commit();
+    }
 
-            }
-
+    //Интерфейс для запуска IngredientListFragment
     @Override
     public void itemClicked(long id) {
         IngredientListFragment.SELECTED_INGREDIENTS = choosedIngredients;
@@ -54,6 +49,4 @@ public class FavoriteActivity extends Activity implements FavoriteFragment.CallB
         trans.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
         trans.commit();
     }
-
 }
-
