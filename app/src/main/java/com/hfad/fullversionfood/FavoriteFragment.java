@@ -105,5 +105,4 @@ public class FavoriteFragment extends Fragment implements IngredientListFragment
         }
         return string;
     }
-
 }
