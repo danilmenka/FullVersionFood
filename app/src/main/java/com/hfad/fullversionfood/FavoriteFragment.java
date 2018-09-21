@@ -32,13 +32,16 @@ public class FavoriteFragment extends Fragment implements IngredientListFragment
         ala = toFillingAnArrayOfSelectedItems(ingredients,ala);
         //Удаляем из массива элементы, удаленные из выбранных
         ala = toRemoveFromFullArray(ala,removeFromSelected);
+        FavoriteActivity.choosedIngredients = ala;
     }
 
       @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        setRetainInstance(true);
         final View rootView =
                 inflater.inflate(R.layout.fragment_favorite, container, false);
+
         Button button = (Button) rootView.findViewById(R.id.button3);
         ingredientText = (TextView)rootView.findViewById(R.id.IngredientsInFavourite);
         button.setOnClickListener(new View.OnClickListener() {
@@ -105,4 +108,5 @@ public class FavoriteFragment extends Fragment implements IngredientListFragment
         }
         return string;
     }
+
 }

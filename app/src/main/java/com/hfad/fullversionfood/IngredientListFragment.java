@@ -1,6 +1,5 @@
 package com.hfad.fullversionfood;
 
-import android.app.Activity;
 import android.app.ListFragment;
 import android.os.Bundle;
 import android.app.Fragment;
@@ -22,7 +21,7 @@ public class IngredientListFragment extends ListFragment {
     int [] SELECTED_IN_ID;
     public static  int [] SELECTED_INGREDIENTS  = new int[Ingredient.ingredients.length];
     public static long INGREDIENT_PARENT_ID;
-    int test;
+    int inkrementInArray;
 
     //Интерфейс, передающий FavoriteFragment выбранные и снятые с выбора пункты
     interface InterfaceIngredients{
@@ -35,7 +34,7 @@ public class IngredientListFragment extends ListFragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+                             Bundle savedInstanceState) {   setRetainInstance(true);
             final View rootView =
                     inflater.inflate(R.layout.fragment_list_ingredient, container, false);
             return rootView;
@@ -46,20 +45,19 @@ public class IngredientListFragment extends ListFragment {
         super.onResume();
 
         int inkrement=0;
-        test = (int) INGREDIENT_PARENT_ID;
+        inkrementInArray = (int) INGREDIENT_PARENT_ID;
         for (int i=0; i<Ingredient.ingredients.length; i++){
-            if(Ingredient.parents[test] == Ingredient.ingredients[i].getParent()){
+            if(Ingredient.parents[inkrementInArray] == Ingredient.ingredients[i].getParent()){
                 inkrement++;}
         }
         int k = 0;
-
         names = new String[inkrement];
         idIngredient = new int[inkrement];
         prompt = new int[inkrement];
         int [] clicked =new int [inkrement];
         //Заполнение, выделелние выбранных ранее
         for (int i=0; i<Ingredient.ingredients.length; i++){
-            if(Ingredient.parents[test] == Ingredient.ingredients[i].getParent()){
+            if(Ingredient.parents[inkrementInArray] == Ingredient.ingredients[i].getParent()){
                 names[k] = Ingredient.ingredients[i].getName();
                 idIngredient[k] = Ingredient.ingredients[i].getId();
                 for (int z = 0; z < SELECTED_INGREDIENTS.length; z++){

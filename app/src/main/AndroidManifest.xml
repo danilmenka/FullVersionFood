@@ -17,7 +17,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".ReadyRecipe" />
-        <activity android:name=".FavoriteActivity" />
+        <activity android:name=".FavoriteActivity" android:configChanges="orientation" />
     </application>
 
 </manifest>

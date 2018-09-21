@@ -10,11 +10,12 @@ public class FavoriteActivity extends Activity implements FavoriteFragment.CallB
     AddIngrFragment addIngrFragment;
     FragmentTransaction trans;
     IngredientListFragment ingredientListFragment;
-    int [] choosedIngredients= new int[Ingredient.ingredients.length]; //Массив выбранных элементов
+    public static int [] choosedIngredients= new int[Ingredient.ingredients.length]; //Массив выбранных элементов
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_favorite);
         favoriteFragment = new FavoriteFragment();
         addIngrFragment = new AddIngrFragment();
