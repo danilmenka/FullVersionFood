@@ -1,5 +1,8 @@
 package com.hfad.fullversionfood;
 
+import android.database.Cursor;
+import android.database.SQLException;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.app.Fragment;
 import android.view.LayoutInflater;
@@ -7,10 +10,31 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+
+import java.io.IOException;
+
 /**
  * A simple {@link Fragment} subclass.
  */
 public class FavoriteFragment extends Fragment implements IngredientListFragment.InterfaceIngredients{
+
+
+
+
+
+    private DatabaseHelper mDBHelper;
+    private SQLiteDatabase mDb;
+
+
+
+
+
+
+
+
+
+
+
     //Переменные
     TextView ingredientText;
     public String str = ""; //Строка выбранных элементов
@@ -38,15 +62,45 @@ public class FavoriteFragment extends Fragment implements IngredientListFragment
       @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
+
         setRetainInstance(true);
         final View rootView =
                 inflater.inflate(R.layout.fragment_favorite, container, false);
+
+
+          mDBHelper = new DatabaseHelper(rootView.getContext());
+
+          try {
+              mDBHelper.updateDataBase();
+          } catch (IOException mIOException) {
+              throw new Error("UnableToUpdateDatabase");
+          }
+
+          try {
+              mDb = mDBHelper.getWritableDatabase();
+          } catch (SQLException mSQLException) {
+              throw mSQLException;
+          }
 
         Button button = (Button) rootView.findViewById(R.id.button3);
         ingredientText = (TextView)rootView.findViewById(R.id.IngredientsInFavourite);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+/*
+                String product = "";
+
+                Cursor cursor = mDb.rawQuery("SELECT * FROM parents", null);
+                cursor.moveToFirst();
+                while (!cursor.isAfterLast()) {
+                    product += cursor.getString(1) + " | ";
+                    cursor.moveToNext();
+                }
+                cursor.close();
+
+                ingredientText.setText(product);
+*/
                 // Запускаем AddIngrFragment
                 callBack.callingBack(ala);
             }
