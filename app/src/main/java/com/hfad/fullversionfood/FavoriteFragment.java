@@ -1,6 +1,8 @@
 package com.hfad.fullversionfood;
 
+import android.content.Context;
 import android.database.Cursor;
+import android.database.DatabaseUtils;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
@@ -10,36 +12,20 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
-
 import java.io.IOException;
 
 /**
  * A simple {@link Fragment} subclass.
  */
 public class FavoriteFragment extends Fragment implements IngredientListFragment.InterfaceIngredients{
-
-
-
-
-
     private DatabaseHelper mDBHelper;
     private SQLiteDatabase mDb;
-
-
-
-
-
-
-
-
-
-
-
     //Переменные
     TextView ingredientText;
-    public String str = ""; //Строка выбранных элементов
-    int [] ala= new int[Ingredient.ingredients.length]; //Массив выбранных элементов
-
+    private String str = ""; //Строка выбранных элементов
+    private String idList = "";
+    private int [] ala = new int[FavoriteActivity.nani]; //Массив выбранных элементов
+    String [] names = new String[FavoriteActivity.nani];
     //Интерфейс для запуска AddIngrFragment
     interface CallBack{
         void callingBack(int [] selectedIngredients);
@@ -62,14 +48,10 @@ public class FavoriteFragment extends Fragment implements IngredientListFragment
       @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
-
         setRetainInstance(true);
         final View rootView =
                 inflater.inflate(R.layout.fragment_favorite, container, false);
-
-
-          mDBHelper = new DatabaseHelper(rootView.getContext());
+          mDBHelper = new DatabaseHelper(getActivity().getApplicationContext());
 
           try {
               mDBHelper.updateDataBase();
@@ -83,37 +65,53 @@ public class FavoriteFragment extends Fragment implements IngredientListFragment
               throw mSQLException;
           }
 
+        setTextIngredients();
+
         Button button = (Button) rootView.findViewById(R.id.button3);
         ingredientText = (TextView)rootView.findViewById(R.id.IngredientsInFavourite);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-/*
-                String product = "";
 
-                Cursor cursor = mDb.rawQuery("SELECT * FROM parents", null);
-                cursor.moveToFirst();
-                while (!cursor.isAfterLast()) {
-                    product += cursor.getString(1) + " | ";
-                    cursor.moveToNext();
-                }
-                cursor.close();
-
-                ingredientText.setText(product);
-*/
                 // Запускаем AddIngrFragment
                 callBack.callingBack(ala);
+
             }
         });
-
-        str = "";
+          str = "";
         //Преобразуем массив в строку
-        str = getStringFromArray(ala,str);
+          for (int i = 0; i < names.length; i++){
+              if (names[i]!=null){
+        str=str+" "+names[i];}}
         ingredientText.setText(str);
-
+          for (int i = 0; i < names.length; i++){names[i] = null;}
         return rootView;
     }
-    public int [] toFillingAnArrayOfSelectedItems (int [] newIngredients,int [] fullArray){
+
+    private String [] setTextIngredients(){
+        idList = null;
+        int alaNotNull = 0;
+        for (int i = 0; i < ala.length;i++){
+            if (ala[i]!=0) alaNotNull++;
+        }
+        for (int i = 0; i < alaNotNull;i++){
+            if (idList == null){idList = Integer.toString(ala[i]);} else {idList += ", "+ Integer.toString(ala[i]);}
+        }
+        String query = "SELECT * FROM ingredient WHERE _id IN ("+idList+")";
+
+        Cursor cursor = mDb.rawQuery(query, null);
+        cursor.moveToFirst();
+        int o =0;
+        while (!cursor.isAfterLast()) {
+            names [o] = cursor.getString(1);
+            cursor.moveToNext();
+            o++;
+        }
+        cursor.close();
+        return names;
+    }
+
+    private int [] toFillingAnArrayOfSelectedItems (int [] newIngredients,int [] fullArray){
         boolean toggle = false;
         for (int k = 0; k < newIngredients.length; k++){
             if (newIngredients[k] !=0){
@@ -132,10 +130,11 @@ public class FavoriteFragment extends Fragment implements IngredientListFragment
             }
             toggle = false;
         }
+
         return fullArray;
     }
 
-    public int [] toRemoveFromFullArray (int [] fullArray, int [] remotePoints ){
+    private int [] toRemoveFromFullArray (int [] fullArray, int [] remotePoints ){
         int [] finishFullArray = new int[fullArray.length];
         for (int i=0; i < fullArray.length; i++){
             for (int k=0;k< remotePoints.length;k++){
@@ -151,16 +150,12 @@ public class FavoriteFragment extends Fragment implements IngredientListFragment
                  z++;
                 }
         }
+
         return finishFullArray;
     }
 
-    public String getStringFromArray (int [] array,String string){
-        for (int i = 0; i < array.length; i++){
-            if(array[i] != 0){
-                string += (array[i] + "\n");
-            }
-        }
-        return string;
+    public void onStop() {
+        super.onStop();
     }
 
 }

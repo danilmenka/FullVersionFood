@@ -2,12 +2,21 @@ package com.hfad.fullversionfood;
 
 import android.app.Activity;
 import android.app.FragmentTransaction;
+import android.content.Context;
+import android.database.DatabaseUtils;
+import android.database.SQLException;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 
+import java.io.IOException;
+
 public class FavoriteActivity extends Activity implements FavoriteFragment.CallBack,AddIngrFragment.IngredientListListener {
+    private DatabaseHelper mDBHelper;
+    private SQLiteDatabase mDb;
     //Переменные:
     FavoriteFragment  favoriteFragment;
     AddIngrFragment addIngrFragment;
+    public static int nani;
     FragmentTransaction trans;
     IngredientListFragment ingredientListFragment;
     public static int [] choosedIngredients= new int[Ingredient.ingredients.length]; //Массив выбранных элементов
@@ -17,6 +26,22 @@ public class FavoriteActivity extends Activity implements FavoriteFragment.CallB
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_favorite);
+        mDBHelper = new DatabaseHelper(getApplicationContext());
+
+        try {
+            mDBHelper.updateDataBase();
+        } catch (IOException mIOException) {
+            throw new Error("UnableToUpdateDatabase");
+        }
+
+        try {
+            mDb = mDBHelper.getWritableDatabase();
+        } catch (SQLException mSQLException) {
+            throw mSQLException;
+        }
+
+        long rowCount = DatabaseUtils.longForQuery(mDb, "SELECT COUNT(*) FROM ingredient", null);
+        nani = (int) rowCount;
         favoriteFragment = new FavoriteFragment();
         addIngrFragment = new AddIngrFragment();
         ingredientListFragment = new IngredientListFragment();

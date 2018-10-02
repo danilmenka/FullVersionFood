@@ -62,33 +62,8 @@ public class AddIngrFragment extends ListFragment {
         }
         cursor.close();
 
-
-
-
         ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(inflater.getContext(),android.R.layout.simple_list_item_1,names);
         setListAdapter(arrayAdapter);
-
-
-//Создаем адаптер
-        /*
-                int[] to = { R.id.textView, R.id.textView2};
-        SimpleAdapter adapter = new SimpleAdapter(this, clients, R.layout.adapter_item, from, to);
-        ListView listView = (ListView) findViewById(R.id.listView);
-        listView.setAdapter(adapter);*/
-
-
-
-
-
-        /*
-        names = new String[Ingredient.parents.length];
-        for (int i=0; i<names.length; i++){
-            names[i] = Ingredient.parents[i];
-        }
-        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(inflater.getContext(),android.R.layout.simple_list_item_1,names);
-        setListAdapter(arrayAdapter);*/
-
-
         return super.onCreateView(inflater,container,savedInstanceState);
 
     }
