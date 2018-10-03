@@ -69,6 +69,7 @@ public class FavoriteActivity extends Activity implements FavoriteFragment.CallB
     public void itemClicked(long id) {
         IngredientListFragment.SELECTED_INGREDIENTS = choosedIngredients;
         IngredientListFragment.INGREDIENT_PARENT_ID = id;
+        IngredientListFragment.LISTCLASS = 1;
         trans = getFragmentManager().beginTransaction();
         trans.replace(R.id.frgmCont, ingredientListFragment);
         trans.addToBackStack(null);

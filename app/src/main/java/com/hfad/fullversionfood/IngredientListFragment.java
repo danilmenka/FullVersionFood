@@ -26,6 +26,7 @@ public class IngredientListFragment extends ListFragment {
     int [] idIngredient;
     String[] names;
     int [] SELECTED_IN_ID;
+    public static int LISTCLASS;
     public static  int [] SELECTED_INGREDIENTS  = new int[Ingredient.ingredients.length];
     public static long INGREDIENT_PARENT_ID;
     int inkrementInArray;
@@ -51,6 +52,8 @@ public class IngredientListFragment extends ListFragment {
     public void onResume() {
         super.onResume();
         //Синхронизация id с базой данных
+
+        
         INGREDIENT_PARENT_ID++;
         String query1 = "SELECT COUNT(*) FROM ingredient WHERE parentid = '" + INGREDIENT_PARENT_ID + "'";
         String query2 = "SELECT * FROM ingredient WHERE parentid = '" + INGREDIENT_PARENT_ID + "'";

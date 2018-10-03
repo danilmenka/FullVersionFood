@@ -12,6 +12,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+
+import org.w3c.dom.Text;
+
 import java.io.IOException;
 
 /**
@@ -46,29 +49,19 @@ public class FavoriteFragment extends Fragment implements IngredientListFragment
     }
 
       @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+      public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         setRetainInstance(true);
         final View rootView =
                 inflater.inflate(R.layout.fragment_favorite, container, false);
-          mDBHelper = new DatabaseHelper(getActivity().getApplicationContext());
-
-          try {
-              mDBHelper.updateDataBase();
-          } catch (IOException mIOException) {
-              throw new Error("UnableToUpdateDatabase");
-          }
-
-          try {
-              mDb = mDBHelper.getWritableDatabase();
-          } catch (SQLException mSQLException) {
-              throw mSQLException;
-          }
-
-        setTextIngredients();
-
+        //Подключение бд
+        onDataBase();
         Button button = (Button) rootView.findViewById(R.id.button3);
         ingredientText = (TextView)rootView.findViewById(R.id.IngredientsInFavourite);
+        //Заполнение текста выбранными ингридиентами
+        setTextIngredients();
+        Button buttonAddKitchen = (Button) rootView.findViewById(R.id.buttonAddKitchen);
+        TextView textKitchen = (TextView) rootView.findViewById(R.id.textKitchen);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -78,16 +71,30 @@ public class FavoriteFragment extends Fragment implements IngredientListFragment
 
             }
         });
-          str = "";
-        //Преобразуем массив в строку
-          for (int i = 0; i < names.length; i++){
-              if (names[i]!=null){
-        str=str+" "+names[i];}}
-        ingredientText.setText(str);
-          for (int i = 0; i < names.length; i++){names[i] = null;}
+        buttonAddKitchen.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
         return rootView;
     }
+    private SQLiteDatabase onDataBase(){
+        mDBHelper = new DatabaseHelper(getActivity().getApplicationContext());
 
+        try {
+            mDBHelper.updateDataBase();
+        } catch (IOException mIOException) {
+            throw new Error("UnableToUpdateDatabase");
+        }
+
+        try {
+            mDb = mDBHelper.getWritableDatabase();
+        } catch (SQLException mSQLException) {
+            throw mSQLException;
+        }
+        return mDb;
+    }
     private String [] setTextIngredients(){
         idList = null;
         int alaNotNull = 0;
@@ -108,6 +115,14 @@ public class FavoriteFragment extends Fragment implements IngredientListFragment
             o++;
         }
         cursor.close();
+        str = "";
+
+        //Преобразуем массив в строку
+        for (int i = 0; i < names.length; i++){
+            if (names[i]!=null){
+                str=str+" "+names[i];}}
+        ingredientText.setText(str);
+        for (int i = 0; i < names.length; i++){names[i] = null;}
         return names;
     }
 

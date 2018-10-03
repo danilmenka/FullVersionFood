@@ -23,7 +23,7 @@ public class AddIngrFragment extends ListFragment {
     private DatabaseHelper mDBHelper;
     private SQLiteDatabase mDb;
     //Интерфейс, запускающий IngredientListFragment
-   interface IngredientListListener{
+    interface IngredientListListener{
         void itemClicked(long id);
     }
 
